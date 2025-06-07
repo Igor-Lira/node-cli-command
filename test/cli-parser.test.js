@@ -1,4 +1,4 @@
-const { parseCommands } = require('../cli-parser');
+const { parseCommands } = require('../src/utils/cli-parser');
 
 describe('parseCommands', () => {
   test('should correctly parse --filter argument', () => {

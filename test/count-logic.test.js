@@ -1,4 +1,4 @@
-const { applyCount } = require('../count-logic');
+const { applyCount } = require('../src/commands/count');
 
 const mockData = [
   {

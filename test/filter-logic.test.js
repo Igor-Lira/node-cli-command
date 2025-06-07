@@ -1,4 +1,4 @@
-const { applyFilter } = require('../filter-logic');
+const { applyFilter } = require('../src/commands/filter');
 
 const mockData = [
   {

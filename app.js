@@ -1,7 +1,7 @@
-const { printData, getData } = require('./data-handler');
-const { parseCommands } = require('./cli-parser');
-const { applyFilter } = require('./filter-logic');
-const { applyCount } = require('./count-logic');
+const { printData, getData } = require('./src/utils/data-handler');
+const { parseCommands } = require('./src/utils/cli-parser');
+const { applyFilter } = require('./src/commands/filter');
+const { applyCount } = require('./src/commands/count');
 
 function main() {
   const commands = parseCommands(process.argv);

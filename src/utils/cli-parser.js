@@ -1,4 +1,4 @@
-const {COMMANDS} = require("./constants");
+const {COMMANDS} = require("../data/constants");
 
 const parseCommands = (rawArgs) => {
   const userCommands = {

@@ -1,4 +1,4 @@
-const DATA = require('./data');
+const DATA = require('../data/data');
 
 const getData = () => {
 
