@@ -3,7 +3,11 @@ const COMMANDS = {
   COUNT: '--count',
 }
 
-const DATA = require('./data');
+
+let DATA;
+try {
+  DATA = require('./data');
+} catch (e) {}
 
 const getData = () => {
   return JSON.parse(JSON.stringify(DATA)).data;
@@ -13,14 +17,14 @@ const printData = (data) => {
   console.log(JSON.stringify(data, null, 2));
 }
 
-const parseCommands = (arguments) => {
+const parseCommands = (rawArgs) => {
   const userCommands = {
     filter: null,
     count: false,
     unknown: [],
   };
 
-  const args = arguments.slice(2);
+  const args = rawArgs.slice(2);
 
   for (let arg of args) {
     if (typeof arg === 'string') {
@@ -78,18 +82,31 @@ const applyFilterToAnimal = (animal, filter) => {
 const applyCount = (data) => {
   return data.map(country => {
     const countPeople = country.people.map(person => formatPersonName(person));
+    country = formatCountryName(country);
     return { ...country, people: countPeople };
   });
+}
+const formatCountryName = (country) => {
+  const countPeople = country.people.length;
+  const name = `${country.name} [${countPeople}]`;
+  return { ...country, name };
 }
 
 const formatPersonName = (person) => {
   const countAnimals = person.animals.length;
-  person.name = `${person.name} [${countAnimals}]`;
-  return person;
+  const name = `${person.name} [${countAnimals}]`;
+  return { ...person, name };
 }
 
 function main() {
+
+  if (!DATA || !DATA.data) {
+    console.error('Unable to process data');
+    process.exit(1);
+  }
+
   const commands = parseCommands(process.argv);
+
   let data = getData();
   if (commands.filter) {
     data = applyFilter(data, commands.filter);
@@ -97,6 +114,11 @@ function main() {
   if (commands.count) {
     data = applyCount(data);
   }
+
+  if (commands.unknown?.length > 0) {
+    console.warn(`Unknown command ${commands.unknown.join(', ')}`);
+  }
+
   printData(data);
 }
 
