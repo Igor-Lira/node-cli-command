@@ -24,8 +24,8 @@ const applyFilterToPerson = (people, filter) => {
 
 
 const applyFilterToAnimal = (animal, filter) => {
-  const matches = animal?.name?.toString()?.toLowerCase().includes(filter.toString().toLowerCase());
-  if (matches) {
+  const matches = animal?.name?.toString()?.toLowerCase().includes(filter?.toString().toLowerCase());
+  if (matches || !filter) {
     return animal;
   }
   return null;
